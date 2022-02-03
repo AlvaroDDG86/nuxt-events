@@ -5,5 +5,10 @@
 <script>
 export default {
   name: 'IndexPage',
+  head() {
+    return {
+      title: 'Events list'
+    }
+  }
 }
 </script>
