@@ -5,6 +5,7 @@
       v-for="(event, index) in events"
       :key="index"
       :event-data="event"
+      :data-index="index"
     />
   </div>
 </template>
@@ -16,18 +17,18 @@ export default {
   components: {
     EventCard
   },
-  asyncData({ $axios, error }) { // like data, but async
-    return $axios.get('events.json').then(response => {
+  async asyncData({ $axios, error }) { // like data, but async
+    try {
+      const { data } = await $axios.get('events.json')
       return {
-        events: response.data
+        events: data
       }
-    })
-    .catch(e => {
+    } catch (e) {
       error({
         statusCode: 503,
         message: 'Error fetching the data'
       })
-    })
+    }
   },
   head() {
     return {

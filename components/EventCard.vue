@@ -1,5 +1,5 @@
  <template>
-  <nuxt-link :to="'/event/' + eventData.id">
+  <nuxt-link :to="'/events/' + dataIndex">
     <div class="-shadow">
       <span class="eyebrow">
         @{{ eventData.time }} on {{ parsedDate }}
@@ -18,6 +18,11 @@ export default {
     eventData: {
       type: Object,
       default: () => {}
+    },
+    dataIndex: {
+      type: Number,
+      require: true,
+      default: 0
     }
   },
   computed: {
