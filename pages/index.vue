@@ -11,19 +11,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import EventCard from "~/components/EventCard.vue"
-import EventService from "~/services/EventService.js"
 export default {
   name: 'IndexPage',
   components: {
     EventCard
   },
-  async asyncData({ error }) { // like data, but async
+  async fetch({ store, error }) { // like data, but async
     try {
-      const { data } = await EventService.getEvents()
-      return {
-        events: data
-      }
+      await store.dispatch('events/fetchEvents')
     } catch (e) {
       error({
         statusCode: 503,
@@ -31,10 +28,26 @@ export default {
       })
     }
   },
+  // async asyncData({ error }) { // like data, but async
+  //   try {
+  //     const { data } = await EventService.getEvents()
+  //     return {
+  //       events: data
+  //     }
+  //   } catch (e) {
+  //     error({
+  //       statusCode: 503,
+  //       message: 'Error fetching the data'
+  //     })
+  //   }
+  // },
   head() {
     return {
       title: 'Events list'
     }
+  },
+  computed: {
+    ...mapState({ events: state => state.events.events })
   },
 }
 </script>
