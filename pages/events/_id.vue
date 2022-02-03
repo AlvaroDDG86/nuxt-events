@@ -7,11 +7,12 @@
   </div>
 </template>
 <script>
+import EventService from "~/services/EventService.js"
 export default {
   name: 'EventId',
-  async asyncData({ $axios, error, params }) { // like data, but async
+  async asyncData({ error, params }) { // like data, but async
     try {
-      const { data } = await $axios.get(`events/${params.id.toString()}.json`)
+      const { data } = await EventService.getEvent(params.id)
       return {
         event: data
       }
